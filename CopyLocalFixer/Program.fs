@@ -1,6 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
+﻿open System
 open System.Xml
 open System.IO
 
@@ -40,11 +38,19 @@ let main argv =
                 |> Seq.iter (fun referenceState ->
                     match referenceState with
                     | Match(r) ->
-                        let assemblyNode = r.SelectSingleNode ("@Include", nms)
-                        let node = doc.CreateNode(XmlNodeType.Element, "Private", doc.DocumentElement.NamespaceURI)
-                        node.InnerText <- "True"
-                        r.AppendChild(node) |> ignore
-                        printfn "%s: set Private=True." assemblyNode.Value
+                        let privateNode = r.SelectSingleNode ("foo:Private", nms)
+                        if privateNode = null then
+                            let assemblyNode = r.SelectSingleNode ("@Include", nms)
+                            let node = doc.CreateNode(XmlNodeType.Element, "Private", doc.DocumentElement.NamespaceURI)
+                            node.InnerText <- "True"
+                            r.AppendChild(node) |> ignore
+                            printfn "%s: set Private=True." assemblyNode.Value
+                        else 
+                            privateNode.InnerText <- "True"
+                            
+                            let assemblyNode = r.SelectSingleNode ("@Include", nms)
+                            
+                            printfn "%s: Private was 'False'. Set to 'True'." assemblyNode.Value
                     | NoMatch(r) ->
                         if verbose then 
                             let assemblyNode = r.SelectSingleNode ("@Include", nms)
@@ -56,7 +62,7 @@ let main argv =
                             printfn "%s: No hintpath." assemblyNode.Value
                 )
         else 
-            printfn "Output path %s is diffent from release path %s. Skpping..." outputPathDebug outputPathRelease
+            printfn "Warning -- %s: Output path %s is diffent from release path %s. Skpping..." fileName outputPathDebug outputPathRelease
         
         doc.Save(fileName)
 
