@@ -2,7 +2,7 @@
   "profiles": {
     "CopyLocalChecker": {
       "commandName": "Project",
-      "commandLineArgs": "c:/git/p2p/src/IA"
+      "commandLineArgs": "c:/git/p2p/src/"
     }
   }
 }
