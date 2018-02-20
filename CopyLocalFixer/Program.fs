@@ -32,15 +32,15 @@ let fixCsproj fileName
                     if privateNode = null then
                         let assemblyNode = r.SelectSingleNode ("@Include", nms)
                         let node = doc.CreateNode(XmlNodeType.Element, "Private", doc.DocumentElement.NamespaceURI)
-                        node.InnerText <- "True"
+                        node.InnerText <- "False"
                         r.AppendChild(node) |> ignore
-                        printfn "%s: set Private=True." assemblyNode.Value
+                        printfn "%s: set Private to False." assemblyNode.Value
                     else 
-                        privateNode.InnerText <- "True"
+                        privateNode.InnerText <- "False"
                             
                         let assemblyNode = r.SelectSingleNode ("@Include", nms)
                             
-                        printfn "%s: Private was 'False'. Set to 'True'." assemblyNode.Value
+                        printfn "%s: Private was 'True'. Set to 'False'." assemblyNode.Value
                 | NoMatch(r) ->
                     if verbose then 
                         let assemblyNode = r.SelectSingleNode ("@Include", nms)
