@@ -6,16 +6,23 @@ In large builds assemblies are sometimes excessively copied. CopyLocalFixer atte
 
 ## CopyLocal=false
 
-CopyLocalFixer goes through all projects through specific folder. For each project it checks whether the references are found in same folder. If reference is built in the same folder CopyLocalFixer adds xml element <Private>False</Private> to the reference element. CopyLocalFixer needs Reference elements to have HintPath elements in order to operate.
+CopyLocalFixer goes through all projects in specific folder. For each all references found in the outputpath of the assembly CopyLocalFixer adds  `<Private>False</Private>` under the reference element. CopyLocalFixer needs Reference elements to have HintPath elements in order to operate.
 
 Resulting reference element after CopyLocalChecker has done its trick:
 
 ```xml
-
-    <Reference Include="MyAssembly">
-      <HintPath>outputpath\MyAssembly.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+...
+<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    ...
+    <OutputPath>outputpath\</OutputPath>
+    ...
+</PropertyGroup>
+...
+<Reference Include="MyAssembly">
+    <HintPath>outputpath\MyAssembly.dll</HintPath>
+    <Private>False</Private>
+</Reference>
+...
 
 ```
 
@@ -35,6 +42,11 @@ CopyLocal has to be true when [stackoverflow]:
 * The assembly is loaded via reflection at runtime.
 
 Eagerly setting CopyLocal to false may cause runtime issues. [runtime-errors]
+
+CopyLocalFixer won't work:
+
+* References do not contain HintPaths.
+* Debug / Release output paths differ.
 
 ## ToDo
 
