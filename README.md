@@ -29,19 +29,17 @@ Or just cloning the source and runnig it from solution.
 
 ## Caveats
 
-CopyLocal has to be true when [1]:
+CopyLocal has to be true when [stackoverflow]:
 
 * The assembly is expected to be found in GAC.
 * The assembly is loaded via reflection at runtime.
 
-Eagerly setting CopyLocal to false may cause runtime issues. [2]
+Eagerly setting CopyLocal to false may cause runtime issues. [runtime-errors]
 
 ## ToDo
 
 * Nuget package for easy tooling.
 * Unit tests.
 
-## References
-
-[1]: https://stackoverflow.com/questions/690033/best-practices-for-large-solutions-in-visual-studio-2008
-[2]: http://geekswithblogs.net/mnf/archive/2012/12/09/do-not-change-copy-local-project-references-to-false-unless.aspx
+[stackoverflow]: https://stackoverflow.com/questions/690033/best-practices-for-large-solutions-in-visual-studio-2008
+[runtime-errors]: http://geekswithblogs.net/mnf/archive/2012/12/09/do-not-change-copy-local-project-references-to-false-unless.aspx
